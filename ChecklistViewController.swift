@@ -10,6 +10,7 @@ import UIKit
 
 class ChecklistViewController: UITableViewController {
 
+    
     var items: [ChecklistItem] //// This declares that items will hold an array of ChecklistItem objects but it does not actually create that array.
     // At this point, items does not have a value yet.
     
@@ -51,6 +52,7 @@ class ChecklistViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = 44
+        tableView.backgroundView = UIImageView(image: UIImage(named: "IMG_1228"))
     }
 
     override func didReceiveMemoryWarning() {
