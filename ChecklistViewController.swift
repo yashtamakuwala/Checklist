@@ -52,7 +52,18 @@ class ChecklistViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = 44
-        tableView.backgroundView = UIImageView(image: UIImage(named: "IMG_1228"))
+        //tableView.backgroundView = UIImageView(image: UIImage(named: "IMG_1228"))
+//        let image = UIImage(named: "IMG_1228")
+//        self.view.backgroundColor = UIColor(patternImage: image!)
+//        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"IMG_1228"]];
+//        
+//        self.tableView.backgroundView = imageView;
+//        [imageView release];
+//        self.parentViewController.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"IMG_1228"]];
+        
+      //  self.view.backgroundColor = UIColor(patternImage: UIImage(named: "IMG_1228")!)
+        //[self.tableView setBackgroundColor: [UIColor clearColor]];
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -74,6 +85,9 @@ class ChecklistViewController: UITableViewController {
         
         configureCheckmarkForCell(cell!, withChecklistItem: item)
         configureTextForCell(cell!, withChecklistItem: item)
+        
+//        cell.contentView.backgroundColor = [UIColor clearColor];
+//        cell.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.5];
         return cell!
     }
     
@@ -90,6 +104,13 @@ class ChecklistViewController: UITableViewController {
                 tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        items.removeAtIndex(indexPath.row)
+        
+        let indexPaths = [indexPath]
+        tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+    }
     
     
     func configureCheckmarkForCell(cell: UITableViewCell, withChecklistItem item: ChecklistItem ){
@@ -105,6 +126,19 @@ class ChecklistViewController: UITableViewController {
     func configureTextForCell(cell: UITableViewCell, withChecklistItem item: ChecklistItem){
         let label = cell.viewWithTag(10) as! UILabel
         label.text = item.text
+    }
+    
+    @IBAction func addItem(sender: AnyObject) {
+        let newRowIndex = items.count
+        
+        let item = ChecklistItem()
+        item.text = "New Row"
+        item.checked = true
+        items.append(item)
+        
+        let indexPath = NSIndexPath(forRow: newRowIndex, inSection: 0)
+        let indexPaths = [indexPath]
+        tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
     }
     
 }
