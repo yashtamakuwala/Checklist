@@ -104,6 +104,7 @@ class ChecklistViewController: UITableViewController {
                 tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 
+ //Swipe to delete row.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
         items.removeAtIndex(indexPath.row)
@@ -127,8 +128,7 @@ class ChecklistViewController: UITableViewController {
         let label = cell.viewWithTag(10) as! UILabel
         label.text = item.text
     }
-    
-    @IBAction func addItem(sender: AnyObject) {
+    @IBAction func addItem(sender: AnyObject) { //Adds a new item.
         let newRowIndex = items.count
         
         let item = ChecklistItem()
