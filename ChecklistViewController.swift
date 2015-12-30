@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ChecklistViewController: UITableViewController {
+class ChecklistViewController: UITableViewController, AddItemViewControllerDelegate {
 
     
     var items: [ChecklistItem] //// This declares that items will hold an array of ChecklistItem objects but it does not actually create that array.
@@ -113,6 +113,19 @@ class ChecklistViewController: UITableViewController {
         tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "AddItem" {
+            let navigationController = segue.destinationViewController as! UINavigationController //The new view controller can be found in segue.destinationViewController. The storyboard shows that the segue does not go directly to AddItemViewController but to the navigation controller that embeds it. So first you get ahold of this UINavigationController object.
+            
+            
+            let controller = navigationController.topViewController as! AddItemViewController
+            
+            //To find the AddItemViewController, you can look at the navigation controller’s topViewController property. This property refers to the screen that is currently active inside the navigation controller.
+            
+            controller.delegate = self
+            //Once you have a reference to the AddItemViewController object, you set its delegate property to self and the connection is complete. Note that “self” here refers to the ChecklistViewController.
+        }
+    }
     
     func configureCheckmarkForCell(cell: UITableViewCell, withChecklistItem item: ChecklistItem ){
         
@@ -128,6 +141,7 @@ class ChecklistViewController: UITableViewController {
         let label = cell.viewWithTag(10) as! UILabel
         label.text = item.text
     }
+    
     @IBAction func addItem(sender: AnyObject) { //Adds a new item.
         let newRowIndex = items.count
         
@@ -141,6 +155,13 @@ class ChecklistViewController: UITableViewController {
         tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
     }
     
+    func addItemViewControllerDidCancel(controller: AddItemViewController) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func addItemViewController(controller: AddItemViewController, didFinishAddingItem item: ChecklistItem) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
 }
 
 
