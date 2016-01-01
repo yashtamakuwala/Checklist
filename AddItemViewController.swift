@@ -20,7 +20,18 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
         textField.becomeFirstResponder()
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.rowHeight = 44
+        
+        if let item = itemToEdit {
+            title = "Edit Item"
+            textField.text = item.text
+        }
+    }
     weak var delegate: AddItemViewControllerDelegate?
+    
+    var itemToEdit : ChecklistItem?
     
     @IBAction func cancel(sender: AnyObject) {
         delegate?.addItemViewControllerDidCancel(self)
